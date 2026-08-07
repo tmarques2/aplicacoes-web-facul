@@ -302,20 +302,17 @@ http://localhost:8080/admin
 
 ### Tela de Login
 
-> Insira aqui um print da tela de login do Django Admin.
 
-```md
-![Tela de Login](imagens/login-admin.png)
-```
+![Tela de Login](imagens/01-login-admin.png)
+
 
 ### Painel Administrativo
 
 Após realizar o login com um superusuário, será exibido o painel administrativo do Django.
 
-> Insira aqui um print do painel administrativo.
 
-```md
-![Painel Administrativo](imagens/painel-admin.png)
-```
+
+![Painel Administrativo](imagens/02-painel-admin.png)
+
 
 ---
