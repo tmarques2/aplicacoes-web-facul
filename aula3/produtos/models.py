@@ -1,12 +1,24 @@
 from django.db import models
 
-# Create your models here.
+# Cria a classe Categoria
+class Categoria (models.Model):
+    nome = models.CharField(max_length = 100)
+    
+    def __str__(self):
+        return self.nome
 
 # Cria a classe chamada produto
 class Produto (models.Model):
-    nome = models.ChartField(max_length=120) # definindo o tamanho do nome do produto com tamanho maximo de 120 caracteres
+    nome = models.CharField(max_length=120) # definindo o tamanho do nome do produto com tamanho maximo de 120 caracteres
     quantidade = models.PositiveIntegerField(default=0) # quantidade do produto
     preco = models.DecimalField(max_digits=10,decimal_places=2) # definindo a qtde de digitos e casas decimais
+    categoria = models.ForeignKey(
+        Categoria, 
+        on_delete=models.SET_NULL,
+        null= True,
+        blank= True,
+        related_name="produtos"
+    )
     created_at = models.DateTimeField(auto_now_add = True) # registro de tempo automatico quando o produto é carregado
 
 
@@ -14,3 +26,76 @@ class Produto (models.Model):
     # cria a função
     def __str__(self):
         return f"{self.nome} (qtde={self.quantidade})"
+    
+
+class Cliente(models.Model):
+    nome = models.CharField(max_length=150)
+    email = models.EmailField(
+        unique = True # Registra como unico o email
+    )
+    telefone = models.CharField(
+        max_length= 20,
+        blank=True # pode deixar em branco
+    )
+    
+    def __str__(self):
+        return self.nome
+    
+# Cria a classe Pedido    
+class Pedido (models.Model):
+    STATUS_CHOICES = [
+        ("PENDENTE", "Pendente"),
+        ("PAGO", "Pago"),
+        ("ENVIADO", "Enviado"),
+        ("ENTREGUE", "Entregue"),
+        ("CANCELADO", "Cancelado")
+    ]
+    
+    # Relacionado cliente com pedidos
+    
+    cliente = models.ForeignKey(
+        Cliente,
+        on_delete=models.CASCADE,
+        related_name="pedidos"
+    )
+    
+    data_pedido = models.DateTimeField(
+        auto_now_add=True
+    )
+    
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default="PENDENTE"
+    )
+    
+    def __str__(self):
+        return f"Pedido {self.id} - {self.cliente.nome}"
+    
+    
+    
+class ItemPedido(models.Model):
+    pedido = models. ForeignKey(
+        Pedido,
+        on_delete=models.CASCADE,
+        related_name='itens'
+    )
+    
+    produto = models.ForeignKey(
+        Produto,
+        on_delete=models.PROTECT
+    )
+    
+    quantidade = models.PositiveIntegerField()
+    
+    preco_unitario = models.DecimalField(
+        max_digits= 10,
+        decimal_places=2
+    )
+    
+    def subtotal (self):
+        return self.quantidade * self.preco_unitario
+    
+    def __str__(self):
+        return f"{self.quantidade} x {self.produto.nome}"
+    
