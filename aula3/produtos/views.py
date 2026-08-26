@@ -8,29 +8,42 @@ from .models import (Produto, Categoria, Cliente, Pedido, ItemPedido)
 from django.http import HttpResponse
 
 def home(request):
-    return HttpResponse("Olá Django ! Aplicações Web 2026 -2 - Aula 03 Loja de Produtos")
+    return HttpResponse("Olá Django ! Aplicações Web 2026 -2 - Aula 05 Loja de Produtos")
 
-# Cria a classe Produtoviewset responsável por permitir fazer o crude
+    # Cria a classe Produtoviewset responsável por permitir fazer o crude
+
 class ProdutoViewSet(viewsets.ModelViewSet):
     queryset = Produto.objects.all().order_by("-id")
     serializer_class = ProdutoSerializer
 
-#Categoria
+
+# Categoria
+
 class CategoriaViewSet(viewsets.ModelViewSet):
     queryset = Categoria.objects.all().order_by("-id")
     serializer_class = CategoriaSerializer
     
-#Cliente
+
+
+# Cliente
+
 class ClienteViewSet(viewsets.ModelViewSet):
     queryset = Cliente.objects.all().order_by("-id")
     serializer_class = ClienteSerializer
     
-#Pedido
+    
+# Pedido
+
 class PedidoViewSet(viewsets.ModelViewSet):
     queryset = Pedido.objects.all().order_by("-id")
     serializer_class = PedidoSerializer
     
-#ItemPedido
+    
+# ItemPedido
+
+
 class ItemPedidoViewSet(viewsets.ModelViewSet):
+    
     queryset = ItemPedido.objects.all().order_by("-id")
     serializer_class = ItemPedidoSerializer
+# Create your views here.
