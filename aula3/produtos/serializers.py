@@ -62,6 +62,9 @@ class ItemPedidoSerializer(serializers.ModelSerializer):
 
 # Pedido
 class PedidoSerializer(serializers.ModelSerializer):
+    cliente = serializers.PrimaryKeyRelatedField(
+        read_only = True
+    )
 
     total = serializers.SerializerMethodField(
         read_only=True
