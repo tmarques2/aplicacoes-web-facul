@@ -10,12 +10,28 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import(
     AllowAny, IsAuthenticated
 )
+
+from django.contrib.auth.models import User
+from rest_framework import generics
+from rest_framework.permissions import AllowAny
+from .serializers import CadastroUsuarioSerializers
+
 # importando metodo para exibir uma pagina home
 
 from django.http import HttpResponse
 
 def home(request):
     return HttpResponse("Olá Django ! Aplicações Web 2026 -2 - Aula 05 Loja de Produtos")
+
+
+
+
+class CadastroUsuarioView(generics.CreateAPIView):
+    
+    queryset = User.objects.all()
+    serializer_class = CadastroUsuarioSerializers
+    permission_classes = [AllowAny]
+
 
     # Cria a classe Produtoviewset responsável por permitir fazer o crude
 
