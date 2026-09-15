@@ -90,7 +90,7 @@ class PedidoViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         
         return Pedido.objects.filter(
-            cliente_usuario = self.request.user).order_by("-id")
+            cliente__usuario = self.request.user).order_by("-id")
         
         
     # Ao criar um pedido, associa automaticamente ao cliente autenticado
